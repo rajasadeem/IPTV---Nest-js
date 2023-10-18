@@ -1,13 +1,15 @@
-import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus, UseGuards } from '@nestjs/common';
 import { StreamService } from './stream.service';
 import { CreateStreamDto } from './dto/create.stream.dto';
 import { API_STATUS_CODES, RESPONSE_MESSAGES } from 'src/constants/constants';
 import { UpdateStreamDto } from './dto/update.stream.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('stream')
 export class StreamController {
     constructor(private readonly streamService: StreamService){}
 
+    @UseGuards(AuthGuard)
     @Post()
     async addStream(@Res() response , @Body() createStreamDto: CreateStreamDto){
         try{
@@ -28,6 +30,7 @@ export class StreamController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async getAllStream(@Res() response ){
         try{
@@ -48,6 +51,7 @@ export class StreamController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getStreamById(@Res() response , @Param('id') streamId: string){
         try{
@@ -68,6 +72,7 @@ export class StreamController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Put("/:id")
     async updateStream(@Res() response , @Param('id') streamId: string, @Body() updateStreamDto: UpdateStreamDto){
         try{
@@ -88,6 +93,7 @@ export class StreamController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     async deleteStream(@Res() response , @Param('id') streamId: string){
         try{

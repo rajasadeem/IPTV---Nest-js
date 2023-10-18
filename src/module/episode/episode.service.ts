@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { Episode } from 'src/interface/episode.interface';
 import { CreateEpisodeDto } from './dto/create.episode.dto';
 import { UpdateEpisodeDto } from './dto/update.episode.dto';
-
 @Injectable()
 export class EpisodeService {
     constructor(@InjectModel('Episode') private readonly episodeModel: Model<Episode>){}

@@ -1,13 +1,15 @@
-import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus, UseGuards } from '@nestjs/common';
 import { EpisodeService } from './episode.service';
 import { CreateEpisodeDto } from './dto/create.episode.dto';
 import { API_STATUS_CODES, RESPONSE_MESSAGES } from 'src/constants/constants';
 import { UpdateEpisodeDto } from './dto/update.episode.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('episode')
 export class EpisodeController {
     constructor(private readonly episodeService: EpisodeService) { }
 
+    @UseGuards(AuthGuard)
     @Post()
     async addEpisode(@Res() response, @Body() createEpisodeDto: CreateEpisodeDto) {
         try {
@@ -28,6 +30,7 @@ export class EpisodeController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async getAllEpisode(@Res() response) {
         try {
@@ -48,6 +51,7 @@ export class EpisodeController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getEpisodeById(@Res() response, @Param('id') episodeId: string) {
         try {
@@ -68,6 +72,7 @@ export class EpisodeController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Put("/:id")
     async updateEpisode(@Res() response, @Param('id') episodeId: string, @Body() updateEpisodeDto: UpdateEpisodeDto) {
         try {
@@ -88,6 +93,7 @@ export class EpisodeController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     async deleteEpisode(@Res() response, @Param('id') episodeId: string) {
         try {

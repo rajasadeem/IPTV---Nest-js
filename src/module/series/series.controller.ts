@@ -1,13 +1,15 @@
-import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus, UseGuards } from '@nestjs/common';
 import { SeriesService } from './series.service';
 import { CreateSeriesDto } from './dto/create.series.dto';
 import { API_STATUS_CODES, RESPONSE_MESSAGES } from 'src/constants/constants';
 import { UpdateSeriesDto } from './dto/update.series.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('series')
 export class SeriesController {
     constructor(private readonly seriesService: SeriesService) { }
 
+    @UseGuards(AuthGuard)
     @Post()
     async addSeries(@Res() response, @Body() createSeriesDto: CreateSeriesDto) {
         try {
@@ -29,6 +31,7 @@ export class SeriesController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async getAllSeries(@Res() response) {
         try {
@@ -50,6 +53,7 @@ export class SeriesController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getSeriesById(@Res() response, @Param('id') seriesId: string) {
         try {
@@ -71,6 +75,7 @@ export class SeriesController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Put("/:id")
     async updateSeries(@Res() response, @Param('id') seriesId: string, @Body() updateSeriesDto: UpdateSeriesDto) {
         try {
@@ -92,6 +97,7 @@ export class SeriesController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     async deleteSeries(@Res() response, @Param('id') seriesId: string) {
         try {

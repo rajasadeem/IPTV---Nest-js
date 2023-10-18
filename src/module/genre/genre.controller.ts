@@ -1,13 +1,15 @@
-import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { GenreService } from './genre.service';
 import { CreateGenreDto } from './dto/create.genre.dto';
 import { API_STATUS_CODES, RESPONSE_MESSAGES } from 'src/constants/constants';
 import { UpdateGenreDto } from './dto/update.genre.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('genre')
 export class GenreController {
     constructor( private readonly genreService: GenreService){}
 
+    @UseGuards(AuthGuard)
     @Post()
     async addGenre(@Res() response , @Body() createGenreDto: CreateGenreDto){
         try{
@@ -37,6 +39,7 @@ export class GenreController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async getAllGenre(@Res() response){
         try{
@@ -57,6 +60,7 @@ export class GenreController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getGenreById(@Res() response, @Param('id') genreId: string){
         try{
@@ -77,6 +81,7 @@ export class GenreController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Put("/:id")
     async updateGenre(@Res() response, @Param('id') genreId: string, @Body() updateGenreDto: UpdateGenreDto){
         try{
@@ -106,6 +111,7 @@ export class GenreController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     async deleteGenre(@Res() response, @Param('id') genreID: string){
         try{

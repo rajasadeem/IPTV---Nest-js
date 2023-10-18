@@ -1,13 +1,15 @@
-import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Res, Param, Body, HttpStatus, UseGuards } from '@nestjs/common';
 import { SeasonService } from './season.service';
 import { CreateSeasonDto } from './dto/create.season.dto';
 import { API_STATUS_CODES, RESPONSE_MESSAGES } from 'src/constants/constants';
 import { UpdateSeasonDto } from './dto/update.season.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('season')
 export class SeasonController {
     constructor(private readonly seasonService: SeasonService){}
 
+    @UseGuards(AuthGuard)
     @Post()
     async addSeason(@Res() response , @Body() createSeasonDto: CreateSeasonDto){
         try{
@@ -28,6 +30,7 @@ export class SeasonController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async getAllSeason(@Res() response ){
         try{
@@ -48,6 +51,7 @@ export class SeasonController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getSeasonById(@Res() response , @Param('id') seasonId: string){
         try{
@@ -68,6 +72,7 @@ export class SeasonController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Put("/:id")
     async updateSeason(@Res() response , @Param('id') seasonId: string, @Body() updateSeasonDto: UpdateSeasonDto){
         try{
@@ -88,6 +93,7 @@ export class SeasonController {
         }
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     async deleteSeason(@Res() response , @Param('id') seasonId: string){
         try{
