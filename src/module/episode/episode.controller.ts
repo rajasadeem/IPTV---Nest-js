@@ -7,7 +7,9 @@ import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @Controller('episode')
 export class EpisodeController {
-    constructor(private readonly episodeService: EpisodeService) { }
+    constructor(private readonly episodeService: EpisodeService) { 
+        
+    }
 
     @UseGuards(AuthGuard)
     @Post()
